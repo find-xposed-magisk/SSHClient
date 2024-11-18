@@ -1,11 +1,19 @@
 name = "ssh-web-client"
-type = "webpack"
-account_id = "your-account-id"
-workers_dev = true
+
+[build]
+command = "npm install && npm run build"
+publish = "dist"
+
+[build.environment]
+NODE_VERSION = "18"
 
 [site]
 bucket = "./dist"
-entry-point = "workers-site"
 
-[build]
-command = "npm run build" 
+# Workers 配置
+[workers_dev]
+enabled = true
+
+[[workers]]
+name = "ssh-worker"
+main = "src/worker.js"

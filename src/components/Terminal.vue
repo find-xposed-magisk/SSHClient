@@ -19,6 +19,7 @@ import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import { useSshStore } from '../stores/ssh'
 import 'xterm/css/xterm.css'
+import { config } from '../config/index'
 
 const props = defineProps({
   connectionId: {
@@ -52,11 +53,43 @@ function initializeTerminal() {
 }
 
 function connectWebSocket() {
-  ws.value = new WebSocket('wss://your-backend-url/ssh')
+  const workerUrl = config.workerUrl;
+  ws.value = new WebSocket(workerUrl);
+  
+  ws.value.onopen = () => {
+    // 发送连接信息
+    ws.value.send(JSON.stringify({
+      type: 'connect',
+      host: sshStore.activeConnection.host,
+      port: sshStore.activeConnection.port,
+      username: sshStore.activeConnection.username,
+      // 注意：密码等敏感信息需要加密处理
+      password: sshStore.activeConnection.password
+    }));
+  };
   
   ws.value.onmessage = (event) => {
-    term.value.write(event.data)
-  }
+    const data = JSON.parse(event.data);
+    
+    switch(data.type) {
+      case 'data':
+        term.value.write(data.content);
+        break;
+      case 'error':
+        console.error(data.message);
+        // 显示错误提示
+        break;
+    }
+  };
+  
+  ws.value.onerror = (error) => {
+    console.error('WebSocket error:', error);
+  };
+  
+  ws.value.onclose = () => {
+    console.log('WebSocket connection closed');
+    // 可以在这里实现重连逻辑
+  };
 }
 
 function sendCommand(command) {
