@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 
 export default defineConfig({
+  root: process.cwd(),
   plugins: [vue()],
   resolve: {
     alias: {
@@ -21,6 +22,9 @@ export default defineConfig({
       }
     },
     rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html')
+      },
       output: {
         manualChunks: {
           'vue': ['vue', 'vue-router', 'pinia'],

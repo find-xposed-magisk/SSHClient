@@ -3,14 +3,13 @@ compatibility_date = "2023-12-01"
 
 [build]
 command = "npm install && npm run build"
-dist = "dist"
+output_dir = "dist"
 
 [site]
 bucket = "dist"
 
-# Workers 配置
-[workers_dev]
-enabled = true
+[env.production]
+workers_dev = true
 
 [[workers]]
 name = "ssh-worker"
