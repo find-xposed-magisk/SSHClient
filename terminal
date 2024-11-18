@@ -1,0 +1,3 @@
+npm create vite@latest ssh-web-client -- --template vue
+cd ssh-web-client
+npm install 
