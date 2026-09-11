@@ -44,25 +44,20 @@ Besides mainstream Windows/macOS/Linux/Android, electerm also supports HarmonyOS
 
 ## Features
 
-- Works as a terminal/file manager or ssh/telnet/serialport/RDP/VNC/WEB/Spice/sftp/ftp client
-- Global hotkey to toggle window visibility (similar to guake, default is `ctrl + 2`)
-- Multi platform(linux, mac, win)
+- Works as a terminal/file manager, ssh/sftp/ftp/telnet/serialport/RDP/VNC/Spice client
 - 🇺🇸 🇨🇳 🇧🇷 🇷🇺 🇪🇸 🇫🇷 🇹🇷 🇭🇰 🇯🇵 🇸🇦 🇩🇪 🇰🇷 Multi-language support([electerm-locales](https://github.com/electerm/electerm-locales), contributions/fixes welcome)
 - Double click to directly edit (small) remote files.
-- Auth with publicKey + password.
-- Support Zmodem(rz, sz).
-- Support ssh tunnel.
-- Support [Trzsz](https://github.com/trzsz/trzsz)(trz/tsz), similar to rz/sz, and compatible with tmux.
-- Transparent window(Mac, win).
-- Terminal background image.
+- All kind of auth methods: publicKey, password, ssh agent, certificates, otp, netbird etc.
+- Support Zmodem(rz, sz), and [Trzsz](https://github.com/trzsz/trzsz)(trz/tsz).
+- Support ssh related features: tunnel, connection hopping.
+- Customizable UI: themes, background image.
 - Global/session proxy.
-- Quick commands
-- UI/terminal theme
-- Sync bookmarks/themes/quick commands to github/gitee secret gist
-- Quick input to one or all terminals.
+- Quick commands/triggers to do predefined tasks and automattic operations
+- Sync data including bookmarks to github/gitee secret gist/webdav/custom server/electerm cloud
+- Quick input/mirror input to one or all terminals.
+- AI assistant integration (supporting multiple LLM API formats — OpenAI Chat Completions, OpenAI Responses, and Anthropic Messages) to help with command suggestions, script writing, and explaining selected terminal content, create bookmarks/themes, and agent mode to directly do terminal operations
 - Init from url query string [wiki](https://github.com/electerm/electerm-web/wiki/Init-from-url-query-string)
 - Support mobile device(responsive design)
-- AI assistant integration (supporting [DeepSeek](https://www.deepseek.com), OpenAI, and other AI APIs) to help with command suggestions, script writing, and explaining selected terminal content
 
 ## Migration from v2 to v3
 

@@ -23,10 +23,10 @@ import fs from 'fs'
 const defaultAIPreset = {
   baseURLAI: 'https://ai.electerm.org/api/ai',
   apiPathAI: '/chat/completions',
-  modelAI: 'mistral-small-latest',
+  modelAI: 'free',
   authHeaderNameAI: 'Authorization: Bearer',
   id: 'ai.electerm.org',
-  nameAI: 'ai.electerm.org(default free)'
+  nameAI: 'ai.electerm.org'
 }
 
 let needMigrate
@@ -79,6 +79,10 @@ export async function index (req, res) {
       'electerm-data-tool --data-path "/path/to/data/nedb-database" export data.json'
     )
   }
+  // eg: window.et.sysMenus = ['onNewSsh', 'bookmarks', 'openSetting', 'close']
+  // available keys: onNewSsh, addTab, bookmarks, history, sessions, layout,
+  // openAbout, openSetting, openDevTools, zoom, minimize, maximize, reload,
+  // onCheckUpdate, restart, close
   const data = {
     isDev,
     isMac,
@@ -90,13 +94,28 @@ export async function index (req, res) {
     defaultAIPreset,
     fsFunctions,
     isWebApp: true,
+    disableUpgradeCheck: true,
     extIconPath: cdn + extIconPath,
     cdn,
     sessionLogPath: logDir,
     query: req.query,
     server,
     hasNodePty,
-    needMigrate
+    needMigrate,
+    sysMenus: [
+      'onNewSsh',
+      'addTab',
+      'openSetting',
+      'history',
+      'bookmarks',
+      'sessions',
+      'layout',
+      'openAbout',
+      'zoom',
+      'minimize',
+      'maximize',
+      'reload'
+    ]
   }
   const {
     ENABLE_AUTH

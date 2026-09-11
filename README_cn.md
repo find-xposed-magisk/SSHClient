@@ -46,25 +46,20 @@ Powered by [manate](https://github.com/tylerlong/manate)
 
 ## 功能
 
-- 可作为终端/文件管理器或 ssh/telnet/serialport/RDP/VNC/Spice/sftp/ftp 客户端
-- 可全局热键切换窗口可见性（类似于 guake，默认是 `ctrl + 2`）
-- 支持多平台（Linux、Mac、Win）
+- 可作为终端/文件管理器，以及 ssh/sftp/ftp/telnet/serialport/RDP/VNC/Spice 客户端
 - 🇺🇸 🇨🇳 🇧🇷 🇷🇺 🇪🇸 🇫🇷 🇹🇷 🇭🇰 🇯🇵 🇸🇦 🇩🇪 🇰🇷 支持多语言（[electerm-locales](https://github.com/electerm/electerm-locales)，欢迎贡献/修复）
 - 双击即可直接编辑（小）远程文件
-- 使用公钥 + 密码进行身份验证
-- 支持 Zmodem（rz、sz）
-- 支持 ssh 隧道
-- 支持 [Trzsz](https://github.com/trzsz/trzsz)（trz/tsz），类似于 rz/sz，并与 tmux 兼容
-- 支持透明窗口（Mac、win）
-- 支持终端背景图片
-- 支持全局/会话代理
-- 支持快速命令
-- 支持 UI/终端主题
-- 将书签/主题/快速命令同步到 github/gitee 的 secret gist
-- 支持快速输入到任意或所有终端
+- 全类型认证方式: publicKey, password, ssh agent, 证书, otp, netbird 等
+- 支持 Zmodem（rz、sz），以及 [Trzsz](https://github.com/trzsz/trzsz)（trz/tsz）
+- 支持 ssh 相关特性: 隧道, 连接跳转
+- 可定制 UI: 主题, 背景图片
+- 全局/会话级代理
+- 快捷命令/触发器执行预设任务与自动化操作
+- 同步数据(含书签)到 github/gitee 私人 gist, webdav/custom server/electerm cloud
+- 支持快速输入/镜像输入到一个或多个终端
+- AI助手集成（支持多种 LLM API 格式：OpenAI Chat Completions、OpenAI Responses、Anthropic Messages），协助命令建议、脚本编写、以及解释所选终端内容, 创建书签/主题，以及agent模式直接进行终端操作
 - 可从 URL 查询字符串进行初始化 [wiki](https://github.com/electerm/electerm-web/wiki/Init-from-url-query-string)
 - 支持移动设备(响应式设计)
-- AI助手集成（支持[DeepSeek](https://www.deepseek.com)、OpenAI等AI API），协助命令建议、脚本编写、以及解释所选终端内容
 
 ## 从 v2 迁移到 v3
 

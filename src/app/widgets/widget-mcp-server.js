@@ -40,6 +40,39 @@ function stripDangerousTabProps (obj) {
   )
 }
 
+// Tab UI-state props that must never cross the MCP boundary.
+// A crafted `batch` used to crash the renderer (sizes[batch] undefined).
+// The renderer assigns batch from the current layout instead.
+const tabInternalProps = [
+  'batch',
+  'id',
+  'status',
+  'pane',
+  'tabCount',
+  'from',
+  'srcId',
+  'sftpCreated',
+  'isTransporting',
+  'mcpStatus',
+  'activeTabId',
+  'sshSftpSplitView',
+  'sshTunnelResults',
+  'displayRaw',
+  'autoReConnect',
+  '_reloadState',
+  'isPinned'
+]
+
+function stripTabInternalProps (obj) {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([key]) => !tabInternalProps.includes(key))
+  )
+}
+
+function sanitizeTabArgs (args) {
+  return stripTabInternalProps(stripDangerousTabProps({ ...(args || {}) }))
+}
+
 const widgetInfo = {
   name: 'MCP Server',
   description: 'Expose electerm APIs via Model Context Protocol (MCP) for AI assistants and external tools.',
@@ -619,7 +652,7 @@ class ElectermMCPServer {
       async (args) => {
         const result = await self.sendToRenderer('tool-call', {
           toolName: 'open_tab',
-          args: { ...stripDangerousTabProps(args), type: 'ssh' }
+          args: { ...sanitizeTabArgs(args), type: 'ssh' }
         })
         return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
       }
@@ -634,7 +667,7 @@ class ElectermMCPServer {
       async (args) => {
         const result = await self.sendToRenderer('tool-call', {
           toolName: 'open_tab',
-          args: { ...stripDangerousTabProps(args), type: 'telnet' }
+          args: { ...sanitizeTabArgs(args), type: 'telnet' }
         })
         return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
       }
@@ -649,7 +682,7 @@ class ElectermMCPServer {
       async (args) => {
         const result = await self.sendToRenderer('tool-call', {
           toolName: 'open_tab',
-          args: { ...stripDangerousTabProps(args), type: 'serial' }
+          args: { ...sanitizeTabArgs(args), type: 'serial' }
         })
         return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
       }
@@ -664,7 +697,7 @@ class ElectermMCPServer {
       async (args) => {
         const result = await self.sendToRenderer('tool-call', {
           toolName: 'open_tab',
-          args: { ...stripDangerousTabProps(args), type: 'local' }
+          args: { ...sanitizeTabArgs(args), type: 'local' }
         })
         return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
       }
@@ -712,7 +745,7 @@ class ElectermMCPServer {
         async (args) => {
           const result = await self.sendToRenderer('tool-call', {
             toolName: 'add_bookmark',
-            args: { ...args, type: 'ssh' }
+            args: { ...sanitizeTabArgs(args), type: 'ssh' }
           })
           return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
         }
@@ -727,7 +760,7 @@ class ElectermMCPServer {
         async (args) => {
           const result = await self.sendToRenderer('tool-call', {
             toolName: 'add_bookmark',
-            args: { ...args, type: 'telnet' }
+            args: { ...sanitizeTabArgs(args), type: 'telnet' }
           })
           return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
         }
@@ -742,7 +775,7 @@ class ElectermMCPServer {
         async (args) => {
           const result = await self.sendToRenderer('tool-call', {
             toolName: 'add_bookmark',
-            args: { ...args, type: 'serial' }
+            args: { ...sanitizeTabArgs(args), type: 'serial' }
           })
           return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
         }
@@ -757,7 +790,7 @@ class ElectermMCPServer {
         async (args) => {
           const result = await self.sendToRenderer('tool-call', {
             toolName: 'add_bookmark',
-            args: { ...args, type: 'local' }
+            args: { ...sanitizeTabArgs(args), type: 'local' }
           })
           return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
         }
@@ -773,7 +806,7 @@ class ElectermMCPServer {
           }
         },
         async ({ id, updates }) => {
-          const result = await self.sendToRenderer('tool-call', { toolName: 'edit_bookmark', args: { id, updates } })
+          const result = await self.sendToRenderer('tool-call', { toolName: 'edit_bookmark', args: { id, updates: sanitizeTabArgs(updates) } })
           return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
         }
       )
