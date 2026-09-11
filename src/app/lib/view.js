@@ -112,8 +112,6 @@ export async function index (req, res) {
       'layout',
       'openAbout',
       'zoom',
-      'minimize',
-      'maximize',
       'reload'
     ]
   }
